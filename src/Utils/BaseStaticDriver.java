@@ -1,6 +1,8 @@
 package Utils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 
@@ -32,6 +34,30 @@ public class BaseStaticDriver {
     public static void BekleKapat(int saniye){
         Bekle(saniye);
         driver.quit();
+    }
+
+    public static WebElement getElementById(String id){
+        try {
+            return driver.findElement(By.id(id));
+        }catch(Exception e){
+          return null;
+        }
+    }
+
+    public static WebElement getElementByClassName(String className){
+        try {
+            return driver.findElement(By.className(className));
+        }catch(Exception e){
+            return null;
+        }
+    }
+
+    public static WebElement getElementByTagName(String tagName){
+        try {
+            return driver.findElement(By.tagName(tagName));
+        }catch(Exception e){
+            return null;
+        }
     }
 
 }

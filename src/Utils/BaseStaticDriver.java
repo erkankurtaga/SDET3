@@ -60,4 +60,19 @@ public class BaseStaticDriver {
         }
     }
 
+    public static WebElement getElementByCssSelector(String cssSelector){
+        try {
+            return driver.findElement(By.cssSelector(cssSelector));
+        }catch(Exception e){
+            return null;
+        }
+    }
+
+    public static WebElement getElementByXPath(String xPath){
+        try {
+            return driver.findElement(By.xpath(xPath));
+        }catch(Exception e){
+            return null;
+        }
+    }
 }

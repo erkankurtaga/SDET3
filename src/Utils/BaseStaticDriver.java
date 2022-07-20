@@ -7,6 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 
 import java.time.Duration;
+import java.util.List;
 
 public class BaseStaticDriver {
     public static WebDriver driver;
@@ -71,6 +72,22 @@ public class BaseStaticDriver {
     public static WebElement getElementByXPath(String xPath){
         try {
             return driver.findElement(By.xpath(xPath));
+        }catch(Exception e){
+            return null;
+        }
+    }
+
+    public static WebElement getElementBy(By by){
+        try {
+            return driver.findElement(by);
+        }catch(Exception e){
+            return null;
+        }
+    }
+
+    public static List<WebElement> getElementsBy(By by){
+        try {
+            return driver.findElements(by);
         }catch(Exception e){
             return null;
         }

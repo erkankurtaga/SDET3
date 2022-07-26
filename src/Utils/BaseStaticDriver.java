@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
@@ -13,15 +14,16 @@ public class BaseStaticDriver {
     public static WebDriver driver;
 
     static {
+        KalanOncekileriKapat();
+
         System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY,"true");
         System.setProperty("webdriver.chrome.driver", "driver/chromedriver.exe");
         driver = new ChromeDriver();
         //driver.manage().window().maximize();
         driver.manage().deleteAllCookies();
 
-        Duration dr = Duration.ofSeconds(30);
-        driver.manage().timeouts().pageLoadTimeout(dr);
-        driver.manage().timeouts().implicitlyWait(dr);
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
     }
 
     public static void Bekle(int saniye){
@@ -90,6 +92,15 @@ public class BaseStaticDriver {
             return driver.findElements(by);
         }catch(Exception e){
             return null;
+        }
+    }
+
+    public static void KalanOncekileriKapat() {
+
+        try {
+            Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe /T");
+        } catch (Exception ignored) {
+
         }
     }
 }

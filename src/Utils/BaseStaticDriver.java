@@ -7,23 +7,36 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.awt.*;
 import java.time.Duration;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BaseStaticDriver {
     public static WebDriver driver;
+    public static WebDriverWait wait;
 
-    static {
+    public static Robot robot;
+
+    static
+    {
         KalanOncekileriKapat();
+        Logger logger = Logger.getLogger("");
+        logger.setLevel(Level.SEVERE);
 
         System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY,"true");
         System.setProperty("webdriver.chrome.driver", "driver/chromedriver.exe");
         driver = new ChromeDriver();
-        //driver.manage().window().maximize();
-        driver.manage().deleteAllCookies();
+        //driver.manage().window().maximize(); // max
+        driver.manage().deleteAllCookies();  //
 
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+        wait=new WebDriverWait(driver,Duration.ofSeconds(30));
+
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30)); // sadece ana sayfa yüklenirken en başta
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30)); // bütün webElement için geçerli
+
+        robot = getRobot();
     }
 
     public static void Bekle(int saniye){
@@ -101,6 +114,14 @@ public class BaseStaticDriver {
             Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe /T");
         } catch (Exception ignored) {
 
+        }
+    }
+
+     private static Robot getRobot(){
+        try {
+            return new Robot();
+        } catch (AWTException e) {
+            throw new RuntimeException(e);
         }
     }
 }

@@ -103,3 +103,5 @@ jobs:
 ## 📜 Lisans
 
 MIT (veya tercih ettiğin lisans).
+
+# ![CI](https://github.com/erkankurtaga/SDET3/actions/workflows/tests.yml/badge.svg)

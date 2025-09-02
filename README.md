@@ -104,4 +104,5 @@ jobs:
 
 MIT (veya tercih ettiğin lisans).
 
+# README badge (add this to the top of your README.md):
 # ![CI](https://github.com/erkankurtaga/SDET3/actions/workflows/tests.yml/badge.svg)

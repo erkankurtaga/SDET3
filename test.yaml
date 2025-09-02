@@ -1,0 +1,60 @@
+# Drop this file at: .github/workflows/tests.yml
+name: CI – Tests
+
+on:
+  push:
+    branches: [ "main", "master", "develop" ]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Cache Maven repo
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-m2-
+
+      - name: Build & Test
+        run: mvn -B clean test -Denv=qa
+
+      - name: Upload surefire reports (HTML/XML)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: |
+            **/target/surefire-reports/
+            **/target/failsafe-reports/
+
+      # --- Optional: Allure results upload (if you generate allure results) ---
+      # - name: Upload Allure results
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: allure-results
+      #     path: **/target/allure-results/
+
+      # --- Optional: Persist screenshots/videos if your framework saves them ---
+      # - name: Upload artifacts (screenshots)
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: test-artifacts
+      #     path: **/target/screenshots/
+
+# README badge (add this to the top of your README.md):
+# ![CI](https://github.com/erkankurtaga/SDET3/actions/workflows/tests.yml/badge.svg)
